@@ -1,0 +1,56 @@
+<div class="page-width">
+  <h2>Wish List</h2>
+  <div class="wishlist__row"></div>
+</div>
+
+<script>
+  $(document).ready(function(){
+    {% for product in collections.all.products %}
+      var wishId = localStorage.getItem("wishlist--{{ product.id }}");
+      console.log(wishId);
+      if(wishId === '{{ product.id }}'){
+        var wishgridID = `
+        <div class="wishlist-grid">
+          <span class="wishClose--{{ product.id }}">&#x2716;</span>
+          <a href=""><img src="{{ product.featured_image | img_url: "master" }}"></a>
+          <h4>{{ product.title }}</h4>
+          <p>{{ product.price | money }}</p>
+        </div>`;
+        $('.wishlist__row').append(wishgridID);
+      }
+      $('.wishClose--{{ product.id }}').click(function(){
+        $(this).parents('.wishlist-grid').remove();
+        localStorage.removeItem("wishlist--{{ product.id }}");
+      });
+    {% endfor %}
+  });
+</script>
+
+<style>
+.wishlist__row {
+  display: flex;
+  flex-wrap: wrap;
+}
+.wishlist-grid {
+    background: darkgoldenrod;
+    display: inline-block;
+    width: 30%;
+    margin: 10px;
+    padding: 10px;
+    position: relative;
+}
+.wishlist-grid img {
+    width: 100%;
+}
+span[class*="wishClose"] {
+    position: absolute;
+    right: 10px;
+    cursor: pointer;
+    background: #001;
+    padding: 1px 8px;
+    opacity: 0;
+}
+  .wishlist-grid:hover span {
+    opacity: 1;
+}
+</style>

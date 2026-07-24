@@ -1,0 +1,63 @@
+<button id="wishlist--{{ productid }}" class="wishlistbtn">&#x2764;	Wishlist</button>
+
+<!-- <script>
+  $(document).ready(function(){
+    $("#wishlist--{{ productid }}").click(function(){
+      let wishlistId = '{{ productid }}';
+      localStorage.setItem("wishlist--{{ productid }}", wishlistId);
+      setTimeout(() => {
+        let wishfillID = localStorage.getItem("wishlist--{{ productid }}");
+        if(wishfillID === wishlistId){
+          $(this).addClass("wishfillID");
+        }
+      },100);
+    });
+    setTimeout(() => {
+        let wishlistId = '{{ productid }}';
+        let wishfillID = localStorage.getItem("wishlist--{{ productid }}");
+        if(wishfillID === wishlistId){
+          $("#wishlist--{{ productid }}").addClass("wishfillID");
+        }
+      },100);
+  });
+</script> -->
+
+<script>
+  $(document).ready(function () {
+    let wishlistId = '{{ productid }}';
+    let $wishlistBtn = $("#wishlist--{{ productid }}");
+
+    // Check if already in wishlist and update UI
+    if (localStorage.getItem("wishlist--" + wishlistId)) {
+      $wishlistBtn.addClass("wishfillID");
+    }
+
+    // Toggle wishlist on button click
+    $wishlistBtn.click(function () {
+      if (localStorage.getItem("wishlist--" + wishlistId)) {
+        localStorage.removeItem("wishlist--" + wishlistId);
+        $(this).removeClass("wishfillID");
+      } else {
+        localStorage.setItem("wishlist--" + wishlistId, wishlistId);
+        $(this).addClass("wishfillID");
+      }
+    });
+  });
+</script>
+
+<style>
+.wishlistbtn {
+    background: orange;
+    padding: 8px 20px;
+    text-transform: capitalize;
+    border: none;
+    border-radius: 3px;
+    text-align: center;
+    cursor: pointer;
+    font-weight: 500;
+}
+.wishlistbtn.wishfillID {
+    background: red;
+    color: #fff;
+}
+</style>

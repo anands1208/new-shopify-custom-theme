@@ -1,0 +1,27 @@
+<section class="liquid_devlop">
+    {%  for collection in collections %}
+        -{{ collection.title | link_to: collection.url }}-
+    {% endfor %}
+
+    <ul class="collection_name">
+        {% for product in collections['best-sellers'].products %}
+            <li>{{ product.title | link_to: product.url }}</li>
+        {% endfor %}
+    </ul>
+</section>
+
+
+{% schema %}
+{
+  "name": "Liquid Section",
+  "settings": [
+    
+  ],
+  "presets": [
+    {
+      "name": "Liquid Section",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}

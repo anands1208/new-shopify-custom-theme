@@ -1,0 +1,61 @@
+<style>
+  .product-page{
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+  }
+  .product_image{
+    width: 50:%
+  }
+  .product_details{
+    width: 50%;
+  }
+</style>
+
+{% layout 'product' %}
+<div class="product-page">
+  <div class="product_image">
+    <div class="product-images">
+      {% for anand in product.images %}
+        <img src="{{ anand | img_url: 'master' }}" alt="{{ product.title }}" width="" height="">
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="product_details">
+    <h1 class="product-title">
+      {{ product.title }}
+    </h1>
+    <p class="product-price">
+      {{ product.price | money }}
+    </p>
+    <div class="product-description">
+      {{ product.description }}
+    </div>
+    <form method="post" action="/cart/add">
+      <select name="id">
+        {% for variant in product.variants %}
+          <option value="{{ variant.id }}">{{ variant.title }} - {{ variant.price | money }}</option>
+        {% endfor %}
+      </select>
+      <button type="submit">Add to Cart</button>
+    </form>
+    {% if product.available %}
+      <p class="in-stock">In Stock</p>
+    {% else %}
+      <p class="out-of-stock">Out of Stock</p>
+    {% endif %}
+    <div class="product-metafields">
+      <p>Material: {{ product.metafields.custom.material }}</p>
+      <p>Warranty: {{ product.metafields.custom.warranty }}</p>
+    </div>
+    <div class="share-buttons">
+      <a href="https://facebook.com/sharer/sharer.php?u={{ shop.url }}{{ product.url }}" target="_blank"
+        >Share on Facebook</a
+      >
+      <a href="https://twitter.com/share?url={{ shop.url }}{{ product.url }}" target="_blank">Share on Twitter</a>
+    </div>
+  </div>
+</div>
